@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/gestures.dart';
 import 'package:flame/palette.dart';
 
 import 'invaders_game.dart';
-import 'simple_draggable.dart';
 
 class PlayerShip extends PositionComponent
-    with Draggable, SimpleDraggable, HasGameRef<InvadersGame> {
+    with Draggable, HasGameRef<InvadersGame> {
   static final _paint = BasicPalette.magenta.paint();
 
   Vector2? dragStart;
@@ -32,9 +32,10 @@ class PlayerShip extends PositionComponent
     y = gameSize.y - 64;
   }
 
-  @override
-  void handleDragMovement(Vector2 ds) {
+  bool onDragUpdate(int pointerId, DragUpdateInfo info) {
+    final ds = info.delta.game;
     position.x += ds.x;
     position.x = position.x.clamp(0, gameRef.size.x);
+    return true;
   }
 }
