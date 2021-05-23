@@ -32,6 +32,7 @@ class PlayerShip extends PositionComponent
     y = gameSize.y - 64;
   }
 
+  @override
   bool onDragUpdate(int pointerId, DragUpdateInfo info) {
     final ds = info.delta.game;
     position.x += ds.x;
