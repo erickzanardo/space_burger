@@ -7,8 +7,8 @@ class PlayerShip extends PositionComponent {
   static final _paint = BasicPalette.magenta.paint();
 
   PlayerShip() {
-    this.anchor = Anchor.center;
-    this.size = Vector2.all(24);
+    anchor = Anchor.center;
+    size = Vector2.all(24);
   }
 
   @override
@@ -22,7 +22,7 @@ class PlayerShip extends PositionComponent {
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
 
-    this.x = gameSize.x / 2;
-    this.y = gameSize.y - 32;
+    x = gameSize.x / 2;
+    y = gameSize.y - 32;
   }
 }
