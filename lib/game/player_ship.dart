@@ -1,14 +1,20 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/gestures.dart';
 import 'package:flame/palette.dart';
 
-class PlayerShip extends PositionComponent {
+import 'invaders_game.dart';
+
+class PlayerShip extends PositionComponent
+    with Draggable, HasGameRef<InvadersGame> {
   static final _paint = BasicPalette.magenta.paint();
+
+  Vector2? dragStart;
 
   PlayerShip() {
     anchor = Anchor.center;
-    size = Vector2.all(24);
+    size = Vector2.all(48);
   }
 
   @override
@@ -23,6 +29,14 @@ class PlayerShip extends PositionComponent {
     super.onGameResize(gameSize);
 
     x = gameSize.x / 2;
-    y = gameSize.y - 32;
+    y = gameSize.y - 64;
+  }
+
+  @override
+  bool onDragUpdate(int pointerId, DragUpdateInfo info) {
+    final ds = info.delta.game;
+    position.x += ds.x;
+    position.x = position.x.clamp(0, gameRef.size.x);
+    return true;
   }
 }
