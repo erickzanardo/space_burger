@@ -1,20 +1,32 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/geometry.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/palette.dart';
 
+import 'bullet.dart';
 import 'invaders_game.dart';
 
 class PlayerShip extends PositionComponent
-    with Draggable, HasGameRef<InvadersGame> {
+    with Draggable, Hitbox, Collidable, HasGameRef<InvadersGame> {
   static final _paint = BasicPalette.magenta.paint();
 
   Vector2? dragStart;
+  late Timer bulletTimer;
 
-  PlayerShip() {
+  PlayerShip() : super(size: Vector2.all(48)) {
     anchor = Anchor.center;
-    size = Vector2.all(48);
+    bulletTimer = Timer(0.5, repeat: true, callback: fire)..pause();
+
+    addShape(HitboxRectangle());
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+
+    bulletTimer.update(dt);
   }
 
   @override
@@ -33,10 +45,38 @@ class PlayerShip extends PositionComponent
   }
 
   @override
+  bool onDragStart(int pointerId, DragStartInfo info) {
+    bulletTimer.start();
+    return super.onDragStart(pointerId, info);
+  }
+
+  @override
+  bool onDragEnd(int pointerId, DragEndInfo info) {
+    bulletTimer.pause();
+    return super.onDragEnd(pointerId, info);
+  }
+
+  @override
+  bool onDragCancel(int pointerId) {
+    bulletTimer.pause();
+    return super.onDragCancel(pointerId);
+  }
+
+  @override
   bool onDragUpdate(int pointerId, DragUpdateInfo info) {
     final ds = info.delta.game;
     position.x += ds.x;
     position.x = position.x.clamp(0, gameRef.size.x);
     return true;
+  }
+
+  void fire() {
+    gameRef.add(
+      Bullet(
+        this,
+        position - Vector2(0, size.y + Bullet.bulletSize) / 2,
+        Vector2(0, -1) * Bullet.bulletSpeed,
+      ),
+    );
   }
 }
