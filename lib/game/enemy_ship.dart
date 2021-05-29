@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -7,6 +8,8 @@ import 'package:flame/palette.dart';
 import 'bullet.dart';
 import 'invaders_game.dart';
 import 'player_ship.dart';
+
+final _r = Random();
 
 class EnemyShip extends PositionComponent
     with Hitbox, Collidable, HasGameRef<InvadersGame> {
@@ -20,7 +23,9 @@ class EnemyShip extends PositionComponent
     position = p;
     anchor = Anchor.center;
     size = Vector2.all(shipSize);
-    bulletTimer = Timer(0.5, repeat: true, callback: fire)..pause();
+    // just to make sure they don't endup too synced
+    double timer = _r.nextDouble() / 2 + 0.5;
+    bulletTimer = Timer(timer, repeat: true, callback: fire)..pause();
 
     addShape(HitboxRectangle());
   }
@@ -28,8 +33,12 @@ class EnemyShip extends PositionComponent
   @override
   void update(double dt) {
     super.update(dt);
+    bulletTimer.update(dt);
 
     y += shipSpeed * dt;
+    if (y > 0 && !bulletTimer.isRunning()) {
+      bulletTimer.start();
+    }
 
     if (y > gameRef.size.y) {
       gameRef.gameOver();
@@ -51,9 +60,13 @@ class EnemyShip extends PositionComponent
   }
 
   void fire() {
+    if (_r.nextDouble() >= 0.1) {
+      return;
+    }
     gameRef.add(
       Bullet(
-        position + Vector2(0, (size.y + Bullet.bulletSize) / 2 + 1),
+        this,
+        position + Vector2(0, size.y + Bullet.bulletSize) / 2,
         Vector2(0, 1) * Bullet.bulletSpeed,
       ),
     );

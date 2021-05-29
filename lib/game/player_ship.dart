@@ -74,7 +74,8 @@ class PlayerShip extends PositionComponent
   void fire() {
     gameRef.add(
       Bullet(
-        position - Vector2(0, (size.y + Bullet.bulletSize) / 2 + 1),
+        this,
+        position - Vector2(0, size.y + Bullet.bulletSize) / 2,
         Vector2(0, -1) * Bullet.bulletSpeed,
       ),
     );
