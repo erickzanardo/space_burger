@@ -15,9 +15,8 @@ class PlayerShip extends PositionComponent
   Vector2? dragStart;
   late Timer bulletTimer;
 
-  PlayerShip() {
+  PlayerShip() : super(size: Vector2.all(48)) {
     anchor = Anchor.center;
-    size = Vector2.all(48);
     bulletTimer = Timer(0.5, repeat: true, callback: fire)..pause();
 
     addShape(HitboxRectangle());

@@ -19,10 +19,9 @@ class EnemyShip extends PositionComponent
 
   late Timer bulletTimer;
 
-  EnemyShip(Vector2 p) {
-    position = p;
+  EnemyShip(Vector2 p) : super(position: p, size: Vector2.all(shipSize)) {
     anchor = Anchor.center;
-    size = Vector2.all(shipSize);
+
     // just to make sure they don't endup too synced
     double timer = _r.nextDouble() / 2 + 0.5;
     bulletTimer = Timer(timer, repeat: true, callback: fire)..pause();

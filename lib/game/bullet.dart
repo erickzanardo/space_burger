@@ -18,10 +18,9 @@ class Bullet extends PositionComponent
   Component owner;
   Vector2 velocity;
 
-  Bullet(this.owner, Vector2 p, this.velocity) {
+  Bullet(this.owner, Vector2 p, this.velocity)
+      : super(position: p, size: Vector2.all(bulletSize)) {
     anchor = Anchor.center;
-    position = p;
-    size = Vector2.all(bulletSize);
 
     addShape(HitboxCircle());
   }
