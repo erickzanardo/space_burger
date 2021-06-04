@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
 
 import 'enemy_ship.dart';
 import 'player_ship.dart';
@@ -10,9 +11,14 @@ final _r = Random();
 
 class InvadersGame extends BaseGame
     with HasDraggableComponents, HasCollidables {
+  final VoidCallback onGameOver;
   late PlayerShip player;
   late TimerComponent enemySpawner;
   bool isGameOver = false;
+
+  InvadersGame({
+    required this.onGameOver,
+  });
 
   @override
   Future<void> onLoad() async {
@@ -53,7 +59,7 @@ class InvadersGame extends BaseGame
     clear();
     print('GAME OVER');
     isGameOver = true;
-    // TODO(luan) impl game over
+    onGameOver();
   }
 
   bool _overlapsShip(double x1, double x2) {
