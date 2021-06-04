@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 
 import 'enemy_ship.dart';
@@ -22,6 +23,19 @@ class InvadersGame extends BaseGame
 
   @override
   Future<void> onLoad() async {
+    final starBg = await loadParallaxLayer(
+      ParallaxImageData('star_bg.png'),
+      repeat: ImageRepeat.repeatY,
+      fill: LayerFill.width,
+    );
+    final spaceBg = await loadParallaxLayer(
+      ParallaxImageData('space_fg.png'),
+      repeat: ImageRepeat.repeatY,
+      fill: LayerFill.width,
+      velocityMultiplier: Vector2(0, 2),
+    );
+    final parallax = Parallax([starBg, spaceBg], baseVelocity: Vector2(0, -10));
+    add(ParallaxComponent.fromParallax(parallax));
     add(player = PlayerShip());
     add(
       enemySpawner = TimerComponent(

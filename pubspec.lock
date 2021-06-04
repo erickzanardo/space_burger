@@ -60,9 +60,11 @@ packages:
   flame:
     dependency: "direct main"
     description:
-      name: flame
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/flame"
+      ref: "erick.animation-parallax"
+      resolved-ref: "615f3327894cf9352668e1714912aa0657072c75"
+      url: "git@github.com:flame-engine/flame.git"
+    source: git
     version: "1.0.0-releasecandidate.11"
   flutter:
     dependency: "direct main"
@@ -94,7 +96,7 @@ packages:
       name: ordered_set
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.0"
   path:
     dependency: transitive
     description:

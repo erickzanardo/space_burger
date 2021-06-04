@@ -1,17 +1,12 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame/gestures.dart';
-import 'package:flame/palette.dart';
 
 import 'bullet.dart';
 import 'invaders_game.dart';
 
-class PlayerShip extends PositionComponent
+class PlayerShip extends SpriteAnimationComponent
     with Draggable, Hitbox, Collidable, HasGameRef<InvadersGame> {
-  static final _paint = BasicPalette.magenta.paint();
-
   Vector2? dragStart;
   late Timer bulletTimer;
 
@@ -23,17 +18,22 @@ class PlayerShip extends PositionComponent
   }
 
   @override
+  Future<void> onLoad() async {
+    animation = await gameRef.loadSpriteAnimation(
+      'player.png',
+      SpriteAnimationData.sequenced(
+        amount: 6,
+        stepTime: 0.2,
+        textureSize: Vector2.all(16),
+      ),
+    );
+  }
+
+  @override
   void update(double dt) {
     super.update(dt);
 
     bulletTimer.update(dt);
-  }
-
-  @override
-  void render(Canvas c) {
-    super.render(c);
-
-    c.drawRect(size.toRect(), _paint);
   }
 
   @override
