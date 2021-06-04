@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ArcadeCallToAction extends StatelessWidget {
   final VoidCallback openGame;
 
-  ArcadeCallToAction({ required this.openGame });
+  ArcadeCallToAction({required this.openGame});
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +22,21 @@ class ArcadeCallToAction extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                    children: [
-                      Text(
-                        'Space burger arcade!',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      SizedBox(height: 10),
-                      Text(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Space burger arcade!',
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
                           'Proteja a terra contra invasores extraterrestres e ganhe prêmios!',
                           textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

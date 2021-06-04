@@ -31,7 +31,8 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
-    final innerScreenBorderRadius = const BorderRadius.all(const Radius.circular(15));
+    final innerScreenBorderRadius =
+        const BorderRadius.all(const Radius.circular(15));
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -45,27 +46,27 @@ class _GamePageState extends State<GamePage> {
           ),
           child: _game != null
               ? ClipRRect(
-                  borderRadius: innerScreenBorderRadius, 
+                  borderRadius: innerScreenBorderRadius,
                   child: GameWidget(game: _game!),
-              )
+                )
               : Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (_gameOver)
-                      Text(
+                        Text(
                           'Game Over!',
                           style: TextStyle(color: Colors.white, fontSize: 56),
                           textAlign: TextAlign.center,
-                      ),
+                        ),
                       Text(
-                          'Credits: $_credits',
-                          style: TextStyle(color: Colors.white, fontSize: 42),
+                        'Credits: $_credits',
+                        style: TextStyle(color: Colors.white, fontSize: 42),
                       ),
                       if (_credits > 0)
                         ElevatedButton(
-                            onPressed: _play,
-                            child: Text('Play!'),
+                          onPressed: _play,
+                          child: Text('Play!'),
                         ),
                       // TODO(erick) implement insert credits
                     ],

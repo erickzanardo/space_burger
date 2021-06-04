@@ -36,8 +36,8 @@ class Home extends StatelessWidget {
                     const SizedBox(height: 25),
                     ArcadeCallToAction(openGame: () {
                       showDialog(
-                          context: context,
-                          builder: (context) => GamePage(),
+                        context: context,
+                        builder: (context) => GamePage(),
                       );
                     }),
                     const SizedBox(height: 10),
