@@ -1,9 +1,7 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
-import 'package:flame/palette.dart';
 
 import 'bullet.dart';
 import 'invaders_game.dart';
@@ -11,11 +9,10 @@ import 'player_ship.dart';
 
 final _r = Random();
 
-class EnemyShip extends PositionComponent
+class EnemyShip extends SpriteAnimationComponent
     with Hitbox, Collidable, HasGameRef<InvadersGame> {
-  static const shipSize = 36.0;
+  static const shipSize = 50.0;
   static const shipSpeed = 10.0;
-  static final _paint = BasicPalette.red.paint();
 
   late Timer bulletTimer;
 
@@ -27,6 +24,18 @@ class EnemyShip extends PositionComponent
     bulletTimer = Timer(timer, repeat: true, callback: fire)..pause();
 
     addShape(HitboxRectangle());
+  }
+
+  @override
+  Future<void> onLoad() async {
+    animation = await gameRef.loadSpriteAnimation(
+      'enemy.png',
+      SpriteAnimationData.sequenced(
+        amount: 6,
+        stepTime: 0.2,
+        textureSize: Vector2.all(16),
+      ),
+    );
   }
 
   @override
@@ -42,13 +51,6 @@ class EnemyShip extends PositionComponent
     if (y > gameRef.size.y) {
       gameRef.gameOver();
     }
-  }
-
-  @override
-  void render(Canvas c) {
-    super.render(c);
-
-    c.drawRect(size.toRect(), _paint);
   }
 
   @override

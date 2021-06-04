@@ -9,7 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: ^1.0.0-releasecandidate.11
+  flame:
+    git:
+      url: git@github.com:flame-engine/flame.git
+      ref: erick.animation-parallax
+      path: packages/flame
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
@@ -20,3 +24,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/images/
